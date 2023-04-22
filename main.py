@@ -1,6 +1,6 @@
-# from work import DBManager
+from work import DBManager
 
-# bdm = DBManager()
+bdm = DBManager()
 
 "Приветствую тебя пользователи в данной программе мы сможем отобразить тебе"
 "вакансии 10 самых топовых it-компаний России"
