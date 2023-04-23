@@ -1,5 +1,6 @@
 import psycopg2
 import requests
+from config import config
 from pprint import pprint
 
 
@@ -42,11 +43,14 @@ class HH:
 
 class DB:
     """Данный класс используя запрос из hh загружает данные в Базу Данных """
+    def __init__(self):
+        self.config = config()
+
 
     def create_database(self):
         """Создание базы данных и таблиц для сохранения данных."""
 
-        conn = psycopg2.connect(dbname='postgres', host='localhost', user='postgres', password='54321')
+        conn = psycopg2.connect(dbname='postgres', **self.config)
         conn.autocommit = True
         cur = conn.cursor()
 
@@ -56,7 +60,7 @@ class DB:
         cur.close()
         conn.close()
 
-        conn = psycopg2.connect(dbname='course_work', host='localhost', user='postgres', password='54321')
+        conn = psycopg2.connect(dbname='course_work', **self.config)
 
         with conn.cursor() as cur:
             cur.execute("""
@@ -82,7 +86,7 @@ class DB:
     def save_data_to_database(self, companies, vacancies):
         """Сохранение данных в таблицы."""
 
-        conn = psycopg2.connect(dbname='course_work', host='localhost', user='postgres', password='54321')
+        conn = psycopg2.connect(dbname='course_work', **self.config)
 
         with conn.cursor() as cur:
             for company in companies:

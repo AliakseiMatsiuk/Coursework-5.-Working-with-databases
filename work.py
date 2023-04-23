@@ -1,7 +1,7 @@
 import psycopg2
 
 from creation import HH, DB
-
+from config import config
 
 def formation():
     """Функция делает все запросы, создеёт базу данных и таблицы,"""
@@ -18,10 +18,12 @@ formation()
 
 class DBManager:
     """Класс подключаться к БД Postgres для вывода информации """
+    def __init__(self):
+        self.config = config()
 
     def connect_to_db(self):
         """Формирует запрос в Базе Данных"""
-        conn = psycopg2.connect(dbname='course_work', host='localhost', user='postgres', password='54321')
+        conn = psycopg2.connect(dbname='course_work', **self.config)
         return conn
 
     def get_companies_and_vacancies_count(self) -> None:
